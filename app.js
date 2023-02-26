@@ -5,13 +5,20 @@ const app = express(); //express fucntion retuns object of type express,by conve
 const logger = require('./logger');
 
 //To enable parsing of JSON object in the body of request
+
+//http://expressjs.com/en/api.html#express.json
 app.use(express.json());
+//http://expressjs.com/en/api.html#express.urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 /*A middleware function is basically a function that takes a request object and return the response to client or either terminates the request/response cycle or passes control to another middleware function.Ex. Route Handler Function beacuse it take req as object and return the response to client.So it terminate the request response cycle.*/
 //Another ex: express.json() when we call express.json() method this method return a middleware function the job of this middleware function is to read the request and if there is json object in the body of request it will parse the body of request into a json object then it will set it req.body property.
 //express.json passes the json object to route handler function.It is builtin middleware function.
 //Express application is a bunch of middleware function.
 //A midleware function called in sequence
+
+//Sattic is used to serve static data. To acess locahost:5000/readme.txt
+app.use(express.static('public'));  //public is name of folder
 //Coustom Middlware
 app.use(logger);
 
