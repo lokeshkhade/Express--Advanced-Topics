@@ -1,3 +1,4 @@
+var config = require('config');
 var morgan = require('morgan');
 const Joi = require('joi');//joi module return a Class and By covention class name start with capital letter
 const express = require('express'); //Load express moudule which returns a function express
@@ -15,6 +16,14 @@ const logger = require('./logger');
 app.use(express.json());
 //http://expressjs.com/en/api.html#express.urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+
+//Configuration
+//Note dont store password like things in it.password should be save in environment variable
+//custom-environment-variables : contains only mapping of environment variable
+console.log('Application Name :' + config.get('name'));
+console.log('Mail Server :' + config.get('mail.host'));
+//console.log('Mail Password :' + config.get('mail.password'));
 
 if (app.get('env') === 'development') {
 
