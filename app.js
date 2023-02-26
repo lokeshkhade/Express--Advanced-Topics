@@ -2,23 +2,25 @@ const Joi = require('joi');//joi module return a Class and By covention class na
 const express = require('express'); //Load express moudule which returns a function express
 const app = express(); //express fucntion retuns object of type express,by convention we call the object as app.app object support varios method get,post,put
 
-const logger=require('./logger');
+const logger = require('./logger');
 
 //To enable parsing of JSON object in the body of request
 app.use(express.json());
 
-//A middleware function is a function that takes a request object and either terminates the request/response cycle or
-// passes control to another middleware function.
+/*A middleware function is basically a function that takes a request object and return the response to client or either terminates the request/response cycle or passes control to another middleware function.Ex. Route Handler Function beacuse it take req as object and return the response to client.So it terminate the request response cycle.*/
+//Another ex: express.json() when we call express.json() method this method return a middleware function the job of this middleware function is to read the request and if there is json object in the body of request it will parse the body of request into a json object then it will set it req.body property.
+//express.json passes the json object to route handler function.It is builtin middleware function.
+//Express application is a bunch of middleware function.
 //A midleware function called in sequence
 //Coustom Middlware
 app.use(logger);
 
 
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
     console.log("Authenticating");
     next();
-    } );
-    
+});
+
 
 const courses = [
     { id: 1, name: 'Maths' },
