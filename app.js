@@ -1,3 +1,5 @@
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 var config = require('config');
 var morgan = require('morgan');
 const Joi = require('joi');//joi module return a Class and By covention class name start with capital letter
@@ -28,9 +30,21 @@ console.log('Mail Server :' + config.get('mail.host'));
 if (app.get('env') === 'development') {
 
     app.use(morgan('dev'));//Not use in production
-    console.log('Morgan Enabled');
+    //console.log('Morgan Enabled');
+    startupDebugger('Morgan Enabled');
+    //We can set debug from environment varible
+    //Set Single Debug: DEBUG=app:satartup DEBUG=
+    //Set Multiple : DEBUG=app:startup,app:db
+    //Set Multiple : DEBUG=app:*
+    //Disable : DEBUG=
+    //command to run : DEBUG=app:db nodemon app.js
 
 }
+//Db logic
+dbDebugger('Connected to database')
+
+
+
 /*A middleware function is basically a function that takes a request object and return the response to client or either terminates the request/response cycle or passes control to another middleware function.Ex. Route Handler Function beacuse it take req as object and return the response to client.So it terminate the request response cycle.*/
 //Another ex: express.json() when we call express.json() method this method return a middleware function the job of this middleware function is to read the request and if there is json object in the body of request it will parse the body of request into a json object then it will set it req.body property.
 //express.json passes the json object to route handler function.It is builtin middleware function.
